@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35013.160
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raphael.Net", "Raphael.Net\Raphael.Net.csproj", "{559D159E-131F-42B3-AF51-9EA785A828DE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{559D159E-131F-42B3-AF51-9EA785A828DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{559D159E-131F-42B3-AF51-9EA785A828DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{559D159E-131F-42B3-AF51-9EA785A828DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{559D159E-131F-42B3-AF51-9EA785A828DE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1AD19540-706E-4D5D-BCE8-CE155203D3DF}
+	EndGlobalSection
+EndGlobal
