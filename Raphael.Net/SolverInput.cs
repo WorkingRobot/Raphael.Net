@@ -1,4 +1,4 @@
-namespace Raphael.Net;
+namespace Raphael;
 
 public readonly record struct SolverInput
 {

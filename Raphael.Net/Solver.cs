@@ -1,4 +1,3 @@
-using Raphael.Net;
 using System.Runtime.InteropServices;
 
 namespace Raphael;
@@ -25,7 +24,7 @@ public sealed unsafe class Solver : IDisposable
     public event Action<Action[]>? OnSuggestSolution;
     public event Action<nuint>? OnProgress;
 
-    public Solver(in SolverConfig config, SolverInput input, IEnumerable<Action> pool)
+    public Solver(in SolverConfig config, in SolverInput input, IEnumerable<Action> pool)
     {
         onStart = (bool* flag_ptr) =>
         {
