@@ -23,26 +23,32 @@ jobs:
           - os-name: linux-x64
             runs-on: ubuntu-latest
             target: x86_64-unknown-linux-gnu
+            binary: libraphael_bindings.so
 
           - os-name: linux-arm64
             runs-on: ubuntu-latest
             target: aarch64-unknown-linux-gnu
+            binary: libraphael_bindings.so
 
           - os-name: win-x64
             runs-on: windows-latest
             target: x86_64-pc-windows-msvc
+            binary: raphael_bindings.dll
 
           - os-name: win-arm64
             runs-on: windows-latest
             target: aarch64-pc-windows-msvc
+            binary: raphael_bindings.dll
 
           - os-name: osx-x64
             runs-on: macOS-latest
             target: x86_64-apple-darwin
+            binary: libraphael_bindings.dylib
 
           - os-name: osx-arm64
             runs-on: macOS-latest
             target: aarch64-apple-darwin
+            binary: libraphael_bindings.dylib
 
     runs-on: ${{ matrix.platform.runs-on }}
     steps:
@@ -58,19 +64,23 @@ jobs:
           working-directory: raphael-rs
           args: "--release -p bindings"
           strip: true
+
+      - name: Attest
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: |
+            raphael-rs/target/${{ matrix.platform.target }}/release/${{ matrix.platform.binary }}
       
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.platform.os-name }}
           path: |
-            raphael-rs/target/${{ matrix.platform.target }}/release/raphael_bindings.dll
-            raphael-rs/target/${{ matrix.platform.target }}/release/libraphael_bindings.so
-            raphael-rs/target/${{ matrix.platform.target }}/release/libraphael_bindings.dylib
+            raphael-rs/target/${{ matrix.platform.target }}/release/${{ matrix.platform.binary }}
 
   build:
     name: .NET Build
-    
+
     runs-on: ubuntu-latest
     needs: build-native
 
@@ -100,7 +110,14 @@ jobs:
 
       - name: Pack
         run: |
-          dotnet pack Raphael.Net -c Release --no-build          
+          dotnet pack Raphael.Net -c Release --no-build
+
+      - name: Attest
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: |
+            Raphael.Net/bin/Release/net8.0/Raphael.Net.dll
+            Raphael.Net/bin/Release/*.nupkg     
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
