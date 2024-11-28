@@ -1,0 +1,125 @@
+name: Build
+
+on:
+  push
+
+permissions:
+  contents: write
+  packages: write
+  id-token: write
+  attestations: write
+
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_NOLOGO: true
+
+jobs:
+  build-native:
+    name: Rust Build - ${{ matrix.platform.os-name }}
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - os-name: linux-x64
+            runs-on: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+
+          - os-name: linux-arm64
+            runs-on: ubuntu-latest
+            target: aarch64-unknown-linux-gnu
+
+          - os-name: win-x64
+            runs-on: windows-latest
+            target: x86_64-pc-windows-msvc
+
+          - os-name: win-arm64
+            runs-on: windows-latest
+            target: aarch64-pc-windows-msvc
+
+          - os-name: osx-x64
+            runs-on: macOS-latest
+            target: x86_64-apple-darwin
+
+          - os-name: osx-arm64
+            runs-on: macOS-latest
+            target: aarch64-apple-darwin
+
+    runs-on: ${{ matrix.platform.runs-on }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Build
+        uses: houseabsolute/actions-rust-cross@v0
+        with:
+          target: ${{ matrix.platform.target }}
+          working-directory: raphael-rs
+          args: "--release -p bindings"
+          strip: true
+      
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.platform.os-name }}
+          path: |
+            raphael-rs/target/${{ matrix.platform.target }}/release/raphael_bindings.dll
+            raphael-rs/target/${{ matrix.platform.target }}/release/libraphael_bindings.so
+            raphael-rs/target/${{ matrix.platform.target }}/release/libraphael_bindings.dylib
+
+  build:
+    runs-on: ubuntu-latest
+    needs: build-native
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0'
+      
+      - name: Download Rust Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: raphael-rs/artifacts
+
+      - name: Restore
+        run: |
+          dotnet restore
+
+      - name: Build
+        run: |
+          dotnet build Raphael.Net -c Release --no-restore
+
+      - name: Pack
+        run: |
+          dotnet pack Raphael.Net -c Release --no-build          
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Raphael.Net
+          path: Raphael.Net/bin/Release
+          if-no-files-found: error
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        id: release
+        with:
+          files: |
+            Raphael.Net/bin/Release/*.nupkg
+            Raphael.Net/bin/Release/*.snupkg            
+
+      - name: Upload to GPR
+        if: startsWith(github.ref, 'refs/tags/')
+        run: dotnet nuget push Raphael.Net/bin/Release/*.nupkg -s https://nuget.pkg.github.com/${{github.repository_owner}} -k ${{secrets.GITHUB_TOKEN}}
+
+      - name: Upload to NuGet
+        if: startsWith(github.ref, 'refs/tags/')
+        run: dotnet nuget push Raphael.Net/bin/Release/*.nupkg -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}}

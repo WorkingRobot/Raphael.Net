@@ -1,9 +1,41 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
+        <Configurations>Release</Configurations>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+        <Authors>Asriel Camora</Authors>
+        <Version>0.1.0</Version>
+        <Description>C# bindings for the FFXIV Raphael Crafting Solver.</Description>
+        <PackageTags>ffxiv;crafting;raphael;craftimizer</PackageTags>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/WorkingRobot/Raphael.Net</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/WorkingRobot/Raphael.Net</RepositoryUrl>
+
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Include="../raphael-rs/bindings/*.g.cs" />
+    </ItemGroup>
+
+    <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+        <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    </PropertyGroup>
+    <ItemGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+        <None Include="../raphael-rs/artifacts/win-x64/raphael_bindings.dll" Pack="true" PackagePath="runtimes/win-x64/native/" Visible="false" />
+        <None Include="../raphael-rs/artifacts/win-arm64/raphael_bindings.dll" Pack="true" PackagePath="runtimes/win-arm64/native/" Visible="false" />
+        <None Include="../raphael-rs/artifacts/linux-x64/libraphael_bindings.so" Pack="true" PackagePath="runtimes/linux-x64/native/" Visible="false" />
+        <None Include="../raphael-rs/artifacts/linux-arm64/libraphael_bindings.so" Pack="true" PackagePath="runtimes/linux-arm64/native/" Visible="false" />
+        <None Include="../raphael-rs/artifacts/osx-x64/libraphael_bindings.dylib" Pack="true" PackagePath="runtimes/osx-x64/native/" Visible="false" />
+        <None Include="../raphael-rs/artifacts/osx-arm64/libraphael_bindings.dylib" Pack="true" PackagePath="runtimes/osx-arm64/native/" Visible="false" />
+    </ItemGroup>
 
 </Project>
