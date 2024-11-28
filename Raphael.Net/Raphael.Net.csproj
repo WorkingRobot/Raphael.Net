@@ -10,8 +10,8 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
         <Authors>Asriel Camora</Authors>
-        <Version>0.1.0</Version>
-        <Description>C# bindings for the FFXIV Raphael Crafting Solver.</Description>
+        <Version>0.9.0</Version>
+        <Description>C# bindings for the FFXIV Raphael Crafting Solver</Description>
         <PackageTags>ffxiv;crafting;raphael;craftimizer</PackageTags>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/WorkingRobot/Raphael.Net</PackageProjectUrl>
