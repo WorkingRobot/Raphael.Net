@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -10,7 +10,7 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
         <Authors>Asriel Camora</Authors>
-        <Version>1.0.0</Version>
+        <Version>1.1.0</Version>
         <Description>C# bindings for the FFXIV Raphael Crafting Solver</Description>
         <PackageTags>ffxiv;crafting;raphael;craftimizer</PackageTags>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -23,7 +23,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="../raphael-rs/bindings/*.g.cs" />
+        <Compile Include="../raphael-rs/raphael-bindings/*.g.cs" />
     </ItemGroup>
 
     <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
