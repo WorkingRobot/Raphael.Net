@@ -62,7 +62,7 @@ jobs:
         with:
           target: ${{ matrix.platform.target }}
           working-directory: raphael-rs
-          args: "--release -p bindings"
+          args: "--release -p raphael-bindings"
           strip: true
 
       - name: Attest
@@ -93,7 +93,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0'
+          dotnet-version: '9.0'
       
       - name: Download Rust Artifacts
         uses: actions/download-artifact@v4
@@ -116,7 +116,7 @@ jobs:
         uses: actions/attest-build-provenance@v1
         with:
           subject-path: |
-            Raphael.Net/bin/Release/net8.0/Raphael.Net.dll
+            Raphael.Net/bin/Release/net9.0/Raphael.Net.dll
             Raphael.Net/bin/Release/*.nupkg     
 
       - name: Upload Artifacts
