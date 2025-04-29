@@ -54,6 +54,7 @@ public sealed unsafe class Solver : IDisposable
             on_progress = (delegate* unmanaged[Cdecl]<nuint, void>)Marshal.GetFunctionPointerForDelegate(onProgress),
             on_log = (delegate* unmanaged[Cdecl]<byte*, nuint, void>)Marshal.GetFunctionPointerForDelegate(onLog),
             log_level = config.LogLevel,
+            thread_count = config.ThreadCount,
 
             action_mask = mask,
 

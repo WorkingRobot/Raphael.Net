@@ -6,4 +6,5 @@ public readonly record struct SolverConfig
     public bool BackloadProgress { get; init; }
     public bool UnsoundBranchPruning { get; init; }
     public LevelFilter LogLevel { get; init; }
+    public ushort ThreadCount { get; init; }
 }
