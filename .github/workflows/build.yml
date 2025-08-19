@@ -58,7 +58,7 @@ jobs:
           submodules: recursive
 
       - name: Build
-        uses: houseabsolute/actions-rust-cross@v0
+        uses: houseabsolute/actions-rust-cross@v1
         with:
           target: ${{ matrix.platform.target }}
           working-directory: raphael-rs
@@ -66,7 +66,7 @@ jobs:
           strip: true
 
       - name: Attest
-        uses: actions/attest-build-provenance@v1
+        uses: actions/attest-build-provenance@v2
         with:
           subject-path: |
             raphael-rs/target/${{ matrix.platform.target }}/release/${{ matrix.platform.binary }}
@@ -113,7 +113,7 @@ jobs:
           dotnet pack Raphael.Net -c Release --no-build
 
       - name: Attest
-        uses: actions/attest-build-provenance@v1
+        uses: actions/attest-build-provenance@v2
         with:
           subject-path: |
             Raphael.Net/bin/Release/net9.0/Raphael.Net.dll
@@ -127,7 +127,7 @@ jobs:
           if-no-files-found: error
 
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         id: release
         with:
