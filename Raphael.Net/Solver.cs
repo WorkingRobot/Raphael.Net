@@ -28,18 +28,16 @@ public sealed unsafe class Solver : IDisposable
 
     public Solver(in SolverConfig config, in SolverInput input, IEnumerable<Action> pool)
     {
-        onStart = (bool* flag_ptr) =>
-            Interlocked.Exchange(ref cancelFlag, (nuint)flag_ptr);
-        onFinish = (Action* actions, nuint length) =>
+        onStart = flag_ptr => Interlocked.Exchange(ref cancelFlag, (nuint)flag_ptr);
+        onFinish = (actions, length) =>
         {
             Interlocked.Exchange(ref cancelFlag, nuint.Zero);
             OnFinish?.Invoke(ConvertRawActions(actions, length));
         };
-        onSuggestSolution = (Action* actions, nuint length) =>
+        onSuggestSolution = (actions, length) =>
             OnSuggestSolution?.Invoke(ConvertRawActions(actions, length));
-        onProgress = (nuint progress) =>
-            OnProgress?.Invoke(progress);
-        onLog = (byte* data, nuint length) =>
+        onProgress = progress => OnProgress?.Invoke(progress);
+        onLog = (data, length) =>
             OnLog?.Invoke(ConvertRawString(data, length));
 
         var mask = 0UL;
@@ -69,7 +67,6 @@ public sealed unsafe class Solver : IDisposable
 
             adversarial = config.Adversarial,
             backload_progress = config.BackloadProgress,
-            unsound_branch_pruning = config.UnsoundBranchPruning,
         };
     }
 
