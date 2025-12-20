@@ -1,7 +1,6 @@
 name: Build
 
-on:
-  push
+on: push
 
 permissions:
   contents: write
@@ -53,7 +52,7 @@ jobs:
     runs-on: ${{ matrix.platform.runs-on }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           submodules: recursive
 
@@ -66,17 +65,17 @@ jobs:
           strip: true
 
       - name: Attest
-        uses: actions/attest-build-provenance@v2
+        uses: actions/attest-build-provenance@v3
         with:
           subject-path: |
-            raphael-rs/target/${{ matrix.platform.target }}/release/${{ matrix.platform.binary }}
-      
+            raphael-bindings/target/${{ matrix.platform.target }}/release/${{ matrix.platform.binary }}
+
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ matrix.platform.os-name }}
           path: |
-            raphael-rs/target/${{ matrix.platform.target }}/release/${{ matrix.platform.binary }}
+            raphael-bindings/target/${{ matrix.platform.target }}/release/${{ matrix.platform.binary }}
 
   build:
     name: .NET Build
@@ -86,19 +85,19 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           submodules: recursive
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: '9.0'
-      
+          dotnet-version: "10.0"
+
       - name: Download Rust Artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
-          path: raphael-rs/artifacts
+          path: artifacts
 
       - name: Restore
         run: |
@@ -113,14 +112,14 @@ jobs:
           dotnet pack Raphael.Net -c Release --no-build
 
       - name: Attest
-        uses: actions/attest-build-provenance@v2
+        uses: actions/attest-build-provenance@v3
         with:
           subject-path: |
-            Raphael.Net/bin/Release/net9.0/Raphael.Net.dll
-            Raphael.Net/bin/Release/*.nupkg     
+            Raphael.Net/bin/Release/net10.0/Raphael.Net.dll
+            Raphael.Net/bin/Release/*.nupkg
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: Raphael.Net
           path: Raphael.Net/bin/Release
@@ -133,7 +132,7 @@ jobs:
         with:
           files: |
             Raphael.Net/bin/Release/*.nupkg
-            Raphael.Net/bin/Release/*.snupkg            
+            Raphael.Net/bin/Release/*.snupkg
 
       - name: Upload to GPR
         if: startsWith(github.ref, 'refs/tags/')
