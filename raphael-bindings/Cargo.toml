@@ -8,10 +8,10 @@ name = "raphael_bindings"
 crate-type = ["cdylib"]
 
 [dependencies]
-raphael-sim = { path = "../raphael-rs/raphael-sim" }
-raphael-solver = { path = "../raphael-rs/raphael-solver" }
-rayon = "1.11"
-log = { version = "0.4", features = ["std"] }
+raphael-sim = { git = "https://github.com/KonaeAkira/raphael-rs.git", branch = "preview" }
+raphael-solver = { git = "https://github.com/KonaeAkira/raphael-rs.git", branch = "preview" }
+rayon = "*"
+log = { version = "*", features = ["std"] }
 
 [build-dependencies]
 cbindgen = "0.29.2"
