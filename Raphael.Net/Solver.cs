@@ -67,6 +67,7 @@ public sealed unsafe class Solver : IDisposable
 
             adversarial = config.Adversarial,
             backload_progress = config.BackloadProgress,
+            allow_non_max_quality_solutions = config.AllowNonMaxQualitySolutions,
         };
     }
 

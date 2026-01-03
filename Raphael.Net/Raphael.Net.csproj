@@ -9,7 +9,7 @@
         <Configurations>Release</Configurations>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
-        <Authors>Asriel Camora</Authors>
+        <Authors>Asriel</Authors>
         <Description>C# bindings for the FFXIV Raphael Crafting Solver</Description>
         <PackageTags>ffxiv;crafting;raphael;craftimizer</PackageTags>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
