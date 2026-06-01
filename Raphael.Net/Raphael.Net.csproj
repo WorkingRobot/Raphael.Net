@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -8,27 +7,22 @@
         <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
         <Configurations>Release</Configurations>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-
         <Authors>Asriel</Authors>
         <Description>C# bindings for the FFXIV Raphael Crafting Solver</Description>
         <PackageTags>ffxiv;crafting;raphael;craftimizer</PackageTags>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/WorkingRobot/Raphael.Net</PackageProjectUrl>
         <RepositoryUrl>https://github.com/WorkingRobot/Raphael.Net</RepositoryUrl>
-
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     </PropertyGroup>
-
     <ItemGroup>
         <Compile Include="../raphael-bindings/*.g.cs" />
     </ItemGroup>
-
     <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
         <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     </PropertyGroup>
-    
     <ItemGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
         <None Include="../artifacts/win-x64/raphael_bindings.dll" Pack="true" PackagePath="runtimes/win-x64/native/" Visible="false" />
         <None Include="../artifacts/win-arm64/raphael_bindings.dll" Pack="true" PackagePath="runtimes/win-arm64/native/" Visible="false" />
@@ -37,12 +31,10 @@
         <None Include="../artifacts/osx-x64/libraphael_bindings.dylib" Pack="true" PackagePath="runtimes/osx-x64/native/" Visible="false" />
         <None Include="../artifacts/osx-arm64/libraphael_bindings.dylib" Pack="true" PackagePath="runtimes/osx-arm64/native/" Visible="false" />
     </ItemGroup>
-
     <ItemGroup>
-        <PackageReference Include="MinVer" Version="6.0.0">
+        <PackageReference Include="MinVer" Version="7.0.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
     </ItemGroup>
-
 </Project>

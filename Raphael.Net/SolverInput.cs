@@ -9,4 +9,5 @@ public readonly record struct SolverInput
     public ushort BaseProgressGain { get; init; }
     public ushort BaseQualityGain { get; init; }
     public byte JobLevel { get; init; }
+    public byte StellarSteadyHandCharges { get; init; }
 }

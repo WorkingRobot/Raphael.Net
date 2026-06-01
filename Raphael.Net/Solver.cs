@@ -64,6 +64,7 @@ public sealed unsafe class Solver : IDisposable
             job_level = input.JobLevel,
             base_progress = input.BaseProgressGain,
             base_quality = input.BaseQualityGain,
+            stellar_steady_hand_charges = input.StellarSteadyHandCharges,
 
             adversarial = config.Adversarial,
             backload_progress = config.BackloadProgress,

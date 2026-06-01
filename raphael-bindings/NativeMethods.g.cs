@@ -45,6 +45,7 @@ namespace Raphael
         [MarshalAs(UnmanagedType.U1)] public bool adversarial;
         [MarshalAs(UnmanagedType.U1)] public bool backload_progress;
         [MarshalAs(UnmanagedType.U1)] public bool allow_non_max_quality_solutions;
+        public byte stellar_steady_hand_charges;
     }
 
 
@@ -81,6 +82,10 @@ namespace Raphael
         QuickInnovation,
         ImmaculateMend,
         TrainedPerfection,
+        StellarSteadyHand,
+        RapidSynthesis,
+        HastyTouch,
+        DaringTouch,
     }
 
     public enum LevelFilter : byte

@@ -25,6 +25,7 @@ pub struct SolveArgs {
     pub adversarial: bool,
     pub backload_progress: bool,
     pub allow_non_max_quality_solutions: bool,
+    pub stellar_steady_hand_charges: u8,
 }
 
 // repr should be identical to raphael_sim::Action
@@ -61,6 +62,10 @@ pub enum Action {
     QuickInnovation,
     ImmaculateMend,
     TrainedPerfection,
+    StellarSteadyHand,
+    RapidSynthesis,
+    HastyTouch,
+    DaringTouch,
 }
 
 // This should produce an error if raphael_sim::Action is changed
@@ -98,6 +103,10 @@ impl From<raphael_sim::Action> for Action {
             raphael_sim::Action::QuickInnovation => Self::QuickInnovation,
             raphael_sim::Action::ImmaculateMend => Self::ImmaculateMend,
             raphael_sim::Action::TrainedPerfection => Self::TrainedPerfection,
+            raphael_sim::Action::StellarSteadyHand => Self::StellarSteadyHand,
+            raphael_sim::Action::RapidSynthesis => Self::RapidSynthesis,
+            raphael_sim::Action::HastyTouch => Self::HastyTouch,
+            raphael_sim::Action::DaringTouch => Self::DaringTouch,
         }
     }
 }
@@ -139,6 +148,7 @@ impl From<SolveArgs> for SolverSettings {
             allowed_actions: ActionMask::from_bits(value.action_mask),
             adversarial: value.adversarial,
             backload_progress: value.backload_progress,
+            stellar_steady_hand_charges: value.stellar_steady_hand_charges,
         };
         Self {
             simulator_settings,

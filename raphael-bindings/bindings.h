@@ -37,6 +37,10 @@ enum class Action : uint8_t {
   QuickInnovation,
   ImmaculateMend,
   TrainedPerfection,
+  StellarSteadyHand,
+  RapidSynthesis,
+  HastyTouch,
+  DaringTouch,
 };
 
 enum class LevelFilter : uint8_t {
@@ -67,6 +71,7 @@ struct SolveArgs {
   bool adversarial;
   bool backload_progress;
   bool allow_non_max_quality_solutions;
+  uint8_t stellar_steady_hand_charges;
 };
 
 extern "C" {
